@@ -1,4 +1,4 @@
-# MENTR webapp Client
+# BASE SPA webapp Client
 
 developed with
 - grunt
