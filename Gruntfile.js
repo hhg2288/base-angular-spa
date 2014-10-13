@@ -42,21 +42,11 @@ module.exports = function ( grunt ) {
 				banner: '<%= meta.banner %>'
 			},
 			dev: {
-				src: [
-					'b_components/angular/angular.js',
-					'b_components/angular-animate/angular-animate.js',
-					'b_components/angular-sanitize/angular-sanitize.js',
-					'b_components/angular-ui-router/release/angular-ui-router.js'
-				],
+				src: '<%= config.vendor_files.js %>',
 				dest: '<%= config.tmp_dir %>/js/vendor.js'
 			},
 			dist: {
-				src: [
-					'b_components/angular/angular.js',
-					'b_components/angular-animate/angular-animate.js',
-					'b_components/angular-sanitize/angular-sanitize.js',
-					'b_components/angular-ui-router/release/angular-ui-router.js'
-				],
+				src: '<%= config.vendor_files.js %>',
 				dest: '<%= config.compile_dir %>/js/vendor.js'
 			}
 		},

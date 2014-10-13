@@ -1,8 +1,9 @@
 'use strict';
-angular.module('mentr', [
+angular.module('app', [
 		'ui.router',
+		//'ui.bootstrap',
 
-		'mentr.home'
+		'app.home'
 	])
 
 	.run(function runFn($rootScope){

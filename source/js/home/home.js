@@ -1,5 +1,5 @@
 'use strict';
-angular.module('mentr.home', [
+angular.module('app.home', [
 		'ui.router'
 	])
 
@@ -16,7 +16,7 @@ angular.module('mentr.home', [
 			});
 	})
 
-	.controller('HomeCtrl', [ '$scope', 'docsService', function($scope){
-
+	.controller('HomeCtrl', [ '$scope', function($scope){
+		$scope.mssg = 'Hello World!';
 	}])
 ;
