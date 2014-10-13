@@ -1,0 +1,29 @@
+{
+  "name": "monomo-docs",
+  "version": "0.0.1",
+  "authors": [
+    "Monomo Team"
+  ],
+  "main": "bower.json",
+  "license": "MIT",
+  "homepage": "monomoapp.com/docs",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "b_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "1.3.0-build.3062+sha.28b54bb",
+    "angular-animate": "1.2.15",
+    "angular-ui-router": "~0.2.10",
+    "angular-sanitize": "1.2.15",
+		"bourbon": "~4.0.2"
+  },
+  "resolutions": {
+    "angular": "1.3.0-build.3062+sha.28b54bb"
+  }
+}

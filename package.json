@@ -1,0 +1,31 @@
+{
+	"name": "Monomo-Documentation",
+	"version": "0.0.1",
+	"description": "",
+	"main": "Gruntfile.js",
+	"homepage": "http://monomoapp.com/docs",
+	"scripts": {
+		"postinstall": "./node_modules/bower/bin/bower install",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Monomo Team",
+	"license": "ISC",
+	"dependencies": {
+		"grunt-cli": "~0.1.13"
+	},
+	"devDependencies": {
+		"bower": "~1.3.5",
+		"grunt": "^0.4.5",
+		"lodash": "^2.4.1",
+		"grunt-contrib-sass": "^0.8.1",
+		"grunt-contrib-copy": "^0.5.0",
+		"grunt-contrib-watch": "^0.6.1",
+		"grunt-contrib-clean": "^0.6.0",
+		"time-grunt": "^1.0.0",
+		"load-grunt-tasks": "^0.6.0",
+		"grunt-processhtml": "^0.3.3",
+		"grunt-open": "^0.2.3",
+		"grunt-contrib-connect": "^0.8.0",
+		"grunt-contrib-concat": "^0.5.0"
+	}
+}
