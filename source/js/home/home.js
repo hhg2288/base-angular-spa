@@ -1,5 +1,11 @@
 'use strict';
-angular.module('app.home', [
+(function () {
+
+var homeCtrl = function($scope){
+	$scope.mssg = 'the dashboard will be here';
+};
+
+	angular.module('app.home', [
 		'ui.router'
 	])
 
@@ -16,7 +22,7 @@ angular.module('app.home', [
 			});
 	})
 
-	.controller('HomeCtrl', [ '$scope', function($scope){
-		$scope.mssg = 'Hello World!';
-	}])
+	.controller('HomeCtrl', [ '$scope', homeCtrl])
 ;
+
+})();

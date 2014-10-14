@@ -1,16 +1,25 @@
 'use strict';
-angular.module('app', [
+(function () {
+
+	var init = function($rootScope){
+
+		},
+
+		config = function($urlRouterProvider){
+			$urlRouterProvider.otherwise('/');
+		};
+
+
+
+angular
+	.module('app', [
 		'ui.router',
-		//'ui.bootstrap',
+		'ui.bootstrap',
 
 		'app.home'
 	])
-
-	.run(function runFn($rootScope){
-
-	})
-
-	.config(function configFn($urlRouterProvider){
-		$urlRouterProvider.otherwise('/');
-	})
+	.run(init)
+	.config(config)
 ;
+
+})();
