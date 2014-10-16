@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Index</title>
+
+	<!-- compiled Stylesheets --><% styles.forEach( function ( file ) { %>
+	<link rel="stylesheet" href="<%= file %>"><% }); %>
+	<!-- ENDOF compiled Stylesheets -->
+</head>
+<body ng-app="app">
+	<div ui-view="main"></div>
+
+
+	<!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+	<script type="text/javascript" src="<%= file %>"></script><% }); %>
+	<!-- ENDOF compiled JavaScript -->
+</body>
+</html>

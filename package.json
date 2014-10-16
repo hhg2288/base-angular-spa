@@ -1,14 +1,14 @@
 {
-	"name": "Monomo-Documentation",
+	"name": "base-angular",
 	"version": "0.0.1",
 	"description": "",
 	"main": "Gruntfile.js",
-	"homepage": "http://monomoapp.com/docs",
+	"homepage": "",
 	"scripts": {
 		"postinstall": "./node_modules/bower/bin/bower install",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Monomo Team",
+	"author": "Horacio Herrera <me@hherrerag.com>",
 	"license": "ISC",
 	"dependencies": {
 		"grunt-cli": "~0.1.13"
@@ -23,9 +23,12 @@
 		"grunt-contrib-clean": "^0.6.0",
 		"time-grunt": "^1.0.0",
 		"load-grunt-tasks": "^0.6.0",
-		"grunt-processhtml": "^0.3.3",
 		"grunt-open": "^0.2.3",
 		"grunt-contrib-connect": "^0.8.0",
-		"grunt-contrib-concat": "^0.5.0"
+		"grunt-contrib-concat": "^0.5.0",
+		"grunt-bump": "0.0.15",
+		"grunt-ng-annotate": "~0.4.0",
+		"grunt-contrib-uglify": "~0.6.0",
+		"grunt-html2js": "~0.2.8"
 	}
 }

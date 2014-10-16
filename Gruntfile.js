@@ -21,33 +21,104 @@ module.exports = function ( grunt ) {
 					' */\n'
 		},
 
+		/**
+		 * Increment version using semantic versioning conventions
+		 *
+		 */
+		bump: {
+			options: {
+				files: ['package.json'],
+				commit: false,
+				createTag: false,
+				push: false,
+				// updateConfigs: [],
+				// commitMessage: 'Release v%VERSION%',
+				// commitFiles: ['package.json'],
+				// tagName: 'v%VERSION%',
+				// tagMessage: 'Version %VERSION%'
+				// pushTo: 'upstream',
+				// gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d'
+			}
+		},
+
 		clean: ['<%= config.compile_dir %>/*', '<%= config.tmp_dir %>/*' ],
 
-		processhtml: {
+		html2js: {
 			dev: {
-				files: {
-					'<%= config.tmp_dir %>/index.html': ['<%= config.src_dir %>/index.html']
-				}
+				options: {
+					base: 'source/'
+				},
+				src: ['<%= config.src_dir %>/<%= config.app_files.tpls %>'],
+				module: 'templates-app',
+				dest: '<%= config.tmp_dir %>/js/templates-app.js'
 			},
-			dist: {
-				files: {
-					'<%= config.compile_dir %>/index.html': ['<%= config.src_dir %>/index.html']
-				}
+			build: {
+				options: {
+					base: 'source/'
+				},
+				src: ['<%= config.src_dir %>/<%= config.app_files.tpls %>'],
+				module: 'templates-app',
+				dest: '<%= config.compile_dir %>/js/templates-app.js'
 			}
 		},
 
 		concat: {
-			options: {
-				stripBanners: true,
-				banner: '<%= meta.banner %>'
+			app: {
+				options: {
+					banner: '<%= meta.banner %>'
+				},
+				src: [
+					'<%= config.src_dir %>/<%= config.app_files.js %>',
+					'<%= config.tmp_dir %>/js/templates-app.js'
+				],
+				dest: '<%= config.compile_dir %>/js/app.js'
+			},
+			vendor: {
+				src: [
+					'<%= config.vendor_files.js %>'
+				],
+				dest: '<%= config.compile_dir %>/js/vendor.js'
 			},
 			dev: {
-				src: '<%= config.vendor_files.js %>',
+				src: [
+					'<%= config.vendor_files.js %>'
+				],
 				dest: '<%= config.tmp_dir %>/js/vendor.js'
+			}
+		},
+
+		/**
+		 * Add AngularJS dependency injection annotations before minifying.
+		 * (It allows us to code without the array syntax)
+		 */
+		ngAnnotate: {
+			options: {
+				singleQuotes: true,
 			},
-			dist: {
-				src: '<%= config.vendor_files.js %>',
-				dest: '<%= config.compile_dir %>/js/vendor.js'
+			app: {
+				files: [{
+					expand: true,
+					src: ['<%= config.compile_dir %>/js/app.js']
+				}],
+			}
+		},
+		/**
+		 * Minify the sources!
+		 */
+		uglify: {
+			app: {
+				options: {
+					banner: '<%= meta.banner %>',
+					preserveComments: false
+				},
+				files: {
+					'<%= config.compile_dir %>/js/app.js':'<%= config.compile_dir %>/js/app.js'
+				}
+			},
+			vendor: {
+				files: {
+					'<%= config.compile_dir %>/js/vendor.js':'<%= config.compile_dir %>/js/vendor.js'
+				}
 			}
 		},
 
@@ -123,16 +194,53 @@ module.exports = function ( grunt ) {
 					// includes files within path and its sub-directories
 					{expand: true, cwd: '<%= config.src_dir %>/js/', src: ['**/*.js','**/*.tpl.html'], dest: '<%= config.tmp_dir %>/js/'},
 					{expand: true, cwd: '<%= config.src_dir %>/assets/', src: ['**/*.png','**/*.svg'], dest: '<%= config.tmp_dir %>/assets/'},
-					{expand: true, cwd: '<%= config.src_dir %>/docs/', src: ['**/*'], dest: '<%= config.tmp_dir %>/docs/'}
+					{expand: true, cwd: '<%= config.src_dir %>/css/fonts/', src: ['**/*'], dest: '<%= config.tmp_dir %>/css/fonts/'}
 				]
 			},
 			dist: {
 				files: [
 					// includes files within path and its sub-directories
-					{expand: true, cwd: '<%= config.src_dir %>/js/', src: ['**/*.js','**/*.tpl.html'], dest: '<%= config.compile_dir %>/js/'},
+					//{expand: true, cwd: '<%= config.src_dir %>/js/', src: ['**/*.js','**/*.tpl.html'], dest: '<%= config.compile_dir %>/js/'},
 					{expand: true, cwd: '<%= config.src_dir %>/assets/', src: ['**/*.png','**/*.svg'], dest: '<%= config.compile_dir %>/assets/'},
-					{expand: true, cwd: '<%= config.src_dir %>/docs/', src: ['**/*'], dest: '<%= config.compile_dir %>/docs/'}
+					{expand: true, cwd: '<%= config.src_dir %>/css/fonts/', src: ['**/*'], dest: '<%= config.compile_dir %>/css/fonts/'}
 				]
+			}
+		},
+		/**
+		 * The `index` task compiles the `index.html` file as a Grunt template. CSS
+		 * and JS files co-exist here but they get split apart later.
+		 */
+		index: {
+
+			/**
+			 * During development, we don't want to have wait for compilation,
+			 * concatenation, minification, etc. So to avoid these steps, we simply
+			 * add all script files directly to the `<head>` of `index.html`. The
+			 * `src` property contains the list of included files.
+			 */
+			dev: {
+				dir: '<%= config.tmp_dir %>',
+				src: [
+					'<%= concat.dev.dest %>',
+					'<%= config.src_dir %>/js/**/*.js',
+					'<%= html2js.dev.dest %>'
+				],
+				css: ['css/main.css']
+			},
+
+			/**
+			 * When it is time to have a completely compiled application, we can
+			 * alter the above to include only a single JavaScript and a single CSS
+			 * file. Now we're back!
+			 */
+			dist: {
+				dir: '<%= config.compile_dir %>',
+				src: [
+					'<%= concat.vendor.dest %>',
+					'<%= concat.app.dest %>',
+					'<%= html2js.build.dest %>'
+				],
+				css: ['css/main.min.css']
 			}
 		}
 	};
@@ -143,9 +251,10 @@ module.exports = function ( grunt ) {
 	grunt.registerTask('server', [
 		'clean',
 		'copy:dev',
-		'processhtml:dev',
 		'sass:dev',
+		'html2js:dev',
 		'concat:dev',
+		'index:dev',
 		'connect',
 		'open',
 		'watch'
@@ -153,9 +262,77 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask('build', [
 		'clean',
-		'copy:dev',
-		'processhtml:dist',
+		'copy:dist',
+		'html2js:build',
 		'sass:dist',
-		'concat:dist'
+		'concat:app',
+		'concat:vendor',
+		'ngAnnotate',
+		'uglify',
+		'index:dist'
 	]);
+
+	/**
+	 * A utility function to get all app JavaScript sources.
+	 */
+	function filterForJS ( files ) {
+		return files.filter( function ( file ) {
+			return file.match( /\.js$/ );
+		});
+	}
+
+	/**
+	 * A utility function to get all app CSS sources.
+	 */
+	function filterForCSS ( files ) {
+		return files.filter( function ( file ) {
+			return file.match( /\.css$/ );
+		});
+	}
+
+	/**
+	 * The index.html template includes the stylesheet and javascript sources
+	 * based on dynamic names calculated in this Gruntfile. This task assembles
+	 * the list into variables for the template to use and then runs the
+	 * compilation.
+	 */
+	grunt.registerMultiTask( 'index', 'Process index.html template', function () {
+		var buildTarget = grunt.option('target');
+
+		var dirRE = new RegExp( '^('+grunt.config('config.src_dir')+'|'+grunt.config('config.tmp_dir')+'|'+grunt.config('config.compile_dir')+')\/', 'g' );
+//		grunt.log.writeln('===  RegExp  ===');
+//		grunt.log.writeln(dirRE);
+
+		var jsFiles = filterForJS( this.filesSrc ).map( function ( file ) {
+			return file.replace( dirRE, '' );
+		});
+
+		var styleSrc = this.data.css;
+
+		//TODO: inject CSS files
+		grunt.file.copy('source/index.tpl.html', this.data.dir + '/index.html', {
+			process: function ( contents, path ) {
+				var config = {
+					scripts: jsFiles,
+					target: buildTarget,
+					styles: styleSrc
+				};
+				/*
+				 grunt.log.writeln('===  Target  ===');
+				 grunt.log.writeln(buildTarget);
+
+				 grunt.log.writeln('===  RegExp  ===');
+				 grunt.log.writeln(dirRE);
+
+				 grunt.log.writeln('===  Scripts  ===');
+				 grunt.log.writeln(config.scripts);
+
+				 grunt.log.writeln('===  Styles  ===');
+				 grunt.log.writeln(config.styles);
+				 */
+
+				return grunt.template.process( contents, { data: config });
+			}
+		});
+	});
 };

@@ -5,6 +5,7 @@ module.exports = {
 	"port": "4444",
 	vendor_files: {
 		js: [
+			'b_components/ng-file-upload/angular-file-upload-shim.js',
 			'b_components/angular/angular.js',
 			'b_components/angular-animate/angular-animate.js',
 			'b_components/angular-sanitize/angular-sanitize.js',
@@ -12,6 +13,13 @@ module.exports = {
 			'b_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
 		],
 		css: [
+			'css/main.min.css'
 		]
+	},
+	app_files: {
+		tpls: [ 'js/**/*.tpl.html' ],
+		js: [ 'js/**/*.js'],
+		assets: ['assets/**/*', 'css/fonts/*']
 	}
+
 };
