@@ -5,6 +5,7 @@ developed with
 - bower
 - angular
 - sass
+- ui.bootstrap (use for prototyping)
 
 ## Instalation
 
