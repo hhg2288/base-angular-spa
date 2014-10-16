@@ -2,7 +2,7 @@
 (function () {
 
 var homeCtrl = function($scope){
-	$scope.mssg = 'the dashboard will be here';
+	$scope.mssg = 'Hello World!!';
 };
 
 	angular.module('app.home', [
