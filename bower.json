@@ -17,16 +17,16 @@
     "tests"
   ],
   "devDependencies": {
-    "bourbon": "~4.0.2"
+    "bourbon": "~4.0.2",
+    "lodash": "~2.4.1"
   },
   "resolutions": {
     "angular": "1.3.0-build.3062+sha.28b54bb"
   },
   "dependencies": {
-		"angular": "1.3.0-build.3062+sha.28b54bb",
-		"angular-animate": "1.2.15",
-		"angular-ui-router": "~0.2.10",
-		"angular-sanitize": "1.2.15",
-		"angular-bootstrap": "~0.11.2"
+    "angular": "1.3.0-build.3062+sha.28b54bb",
+    "angular-animate": "1.2.15",
+    "angular-ui-router": "~0.2.10",
+    "angular-sanitize": "1.2.15"
   }
 }
