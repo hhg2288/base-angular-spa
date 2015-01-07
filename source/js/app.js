@@ -1,25 +1,23 @@
 'use strict';
 (function () {
 
-	var init = function($rootScope){
+	angular
+		.module('app', [
+			'ui.router',
 
-		},
+			'app-templates',
+			'app.home'
+		])
+		.run(init)
+		.config(config)
+	;
 
-		config = function($urlRouterProvider){
-			$urlRouterProvider.otherwise('/');
-		};
+	function init($rootScope) {
 
+	}
 
-
-angular
-	.module('app', [
-		'ui.router',
-		'ui.bootstrap',
-
-		'app.home'
-	])
-	.run(init)
-	.config(config)
-;
+	function config($urlRouterProvider) {
+		$urlRouterProvider.otherwise('/');
+	}
 
 })();

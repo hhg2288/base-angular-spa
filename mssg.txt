@@ -1,0 +1,15 @@
+NAME:
+
+		Gulp Task Manager
+
+
+SYNOPSIS:
+
+		Gulp task manager Manual
+
+
+API:
+
+		gulp serve
+		gulp build
+		gulp deploy
